@@ -1,0 +1,26 @@
+# Dependencies & local dev tooling
+node_modules/
+.pnpm-store/
+
+# Build / bundle outputs (if generated during deployment)
+dist/
+.cache/
+
+# Environment & secrets (strictly BYOK in browser; never commit keys)
+.env
+.env.*
+!.env.example
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+
+# Logs & Playwright/Testing artifacts
+*.log
+npm-debug.log*
+test-results/
+playwright-report/
