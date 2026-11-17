@@ -1,0 +1,11 @@
+{
+  "name": "@open-neighborhood/network-linker",
+  "version": "0.1.0",
+  "description": "Spec-compliant validation, URL resolution, peer-policy checks, and fail-closed sly_data context filtering for Open Agentic Web networks.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "license": "MIT"
+}
