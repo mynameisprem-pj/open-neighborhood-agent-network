@@ -24,3 +24,6 @@ Thumbs.db
 npm-debug.log*
 test-results/
 playwright-report/
+
+# Upstream Cognizant AI Lab reference tooling cache
+.vendor/

@@ -8,6 +8,7 @@
     "packages/*"
   ],
   "scripts": {
+    "setup:official": "node scripts/sync-official-runtime.mjs",
     "dev": "node scripts/dev-servers.mjs",
     "validate:specs": "node scripts/validate-manifests.mjs"
   },
