@@ -107,6 +107,63 @@ export function sendPromptToAssistant(engine, text, { autoSendIfKeyPresent = fal
   return { ok: true, sent: false };
 }
 
+let fetchInterceptorInstalled = false;
+
+/**
+ * Protects browser BYOK LLM calls (/chat/completions) against transient upstream
+ * HTTP 502 / 503 / 529 "high demand" spikes using exponential backoff and automatic
+ * Gemini Flash-Lite fallback on persistent Google 503 overload.
+ */
+export function installResilientLlmFetch({ onRetry = null } = {}) {
+  if (fetchInterceptorInstalled || typeof window === 'undefined' || typeof window.fetch !== 'function') {
+    return;
+  }
+  fetchInterceptorInstalled = true;
+  const nativeFetch = window.fetch.bind(window);
+
+  window.fetch = async (input, init) => {
+    const url = typeof input === 'string' ? input : input?.url || '';
+    const method = (init?.method || 'GET').toUpperCase();
+    const isLlmCompletion = method === 'POST' && /\/chat\/completions(\?|$)/i.test(url);
+
+    if (!isLlmCompletion) {
+      return nativeFetch(input, init);
+    }
+
+    const maxAttempts = 3;
+    const delaysMs = [1200, 2600];
+
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      let currentInit = init;
+
+      // On final retry against Google Gemini OpenAI endpoint after repeated 503s,
+      // fall back congested model to high-availability gemini-2.5-flash-lite
+      if (
+        attempt === maxAttempts &&
+        url.includes('generativelanguage.googleapis.com') &&
+        typeof init?.body === 'string'
+      ) {
+        try {
+          const parsed = JSON.parse(init.body);
+          if (parsed.model && parsed.model !== 'gemini-2.5-flash-lite') {
+            parsed.model = 'gemini-2.5-flash-lite';
+            currentInit = { ...init, body: JSON.stringify(parsed) };
+          }
+        } catch {
+          // Keep original body if not JSON
+        }
+      }
+
+      const res = await nativeFetch(input, currentInit);
+      if (![502, 503, 529].includes(res.status) || attempt === maxAttempts) {
+        return res;
+      }
+
+      onRetry?.({ attempt, status: res.status, url });
+      await new Promise((r) => setTimeout(r, delaysMs[attempt - 1] || 2000));
+    }
+  };
+}
 
 /**
  * Boots a site's local /runtime/index.js and upgrades engine.onConsent + engine.onActionConfirm
@@ -125,6 +182,14 @@ export async function bootNeighborhoodSite({
   if (typeof bootRuntime !== 'function') {
     throw new Error('bootNeighborhoodSite requires the site runtime boot() function.');
   }
+
+  installResilientLlmFetch({
+    onRetry: ({ attempt, status }) => {
+      audit.record('llm_retry_503', {
+        outcome: `Upstream HTTP ${status} spike — auto-retrying (${attempt}/2)`
+      });
+    }
+  });
 
   const dialogs = createTrustDialogs();
   const audit = new TrustAuditLog(onAuditEvent);
