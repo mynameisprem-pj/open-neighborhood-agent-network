@@ -36,7 +36,7 @@ const VERCEL_JSON = JSON.stringify(
 );
 
 async function rewritePortableImports(siteDistDir) {
-  const jsFiles = ['script.js', 'app.js'];
+  const jsFiles = ['script.js', 'app.js', 'index.html'];
   for (const file of jsFiles) {
     const target = path.join(siteDistDir, file);
     try {

@@ -79,7 +79,8 @@ function startSiteServer({ name, dir, port }) {
   });
 
   server.listen(port, () => {
-    console.log(`  ✔ ${name.padEnd(32)} -> http://localhost:${port}`);
+    const hostLabel = port === 4100 ? '127.0.0.1' : 'localhost';
+    console.log(`  ✔ ${name.padEnd(32)} -> http://${hostLabel}:${port}`);
   });
 }
 
