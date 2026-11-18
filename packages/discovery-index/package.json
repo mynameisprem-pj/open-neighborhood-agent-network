@@ -1,0 +1,14 @@
+{
+  "name": "@open-neighborhood/discovery-index",
+  "version": "0.1.0",
+  "description": "Decentralized peer discovery helper and lightweight static JSON directory index for Open Agentic Web sites.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "dependencies": {
+    "@open-neighborhood/network-linker": "0.1.0"
+  },
+  "license": "MIT"
+}

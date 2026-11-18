@@ -1,0 +1,16 @@
+{
+  "name": "@open-neighborhood/agentic-runtime-core",
+  "version": "0.1.0",
+  "description": "Shared browser integration layer connecting the Open Agentic Web runtime with BYOK status UX, consent cards, and fail-closed peer linking.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "dependencies": {
+    "@open-neighborhood/consent-policy-ui": "0.1.0",
+    "@open-neighborhood/discovery-index": "0.1.0",
+    "@open-neighborhood/network-linker": "0.1.0"
+  },
+  "license": "MIT"
+}
