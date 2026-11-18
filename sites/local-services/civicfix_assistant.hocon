@@ -42,13 +42,6 @@ When the visitor asks for something this site cannot do, say so plainly. Then gi
 
             "peer_rules": """
 When you have no website_* tools, another site's assistant is asking for its visitor. That is expected, not a missing integration, whatever a later note says. Skip the steps that need those tools. Say what this site can help with and that its own page has the details, availability and bookings. Do not ask for names, emails, phone numbers or codes.
-Published peer summary for CivicFix Local Services (http://localhost:4102, 88 Cedar Avenue, Mon–Sat 7:30 AM–8:00 PM):
-- Licensed Leak & Drain Plumbing ($45 callout + $85/hr, min 1h; Today 2–4 PM, Tomorrow 9–11 AM)
-- SafeHome Outlet & Lighting Electrical ($50 callout + $95/hr, min 1h; Today 4–6 PM, Tomorrow 10 AM–12 PM)
-- GreenLeaf Apartment & Home Cleaning ($20 callout + $55/hr, min 2h; Tomorrow 9 AM–12 PM, Thu 1–4 PM)
-- Oakwood Handyman & Assembly ($30 callout + $65/hr, min 1h; Today 3:30–5:30 PM, Tomorrow 11 AM–1 PM)
-- Neighborhood Cargo-Bike Errand Runner ($12 callout + $38/hr, min 1h; Today within 90 mins)
-Optional urgent_same_day priority adds $35. Configure live estimates and confirm dispatch on http://localhost:4102.
 """,
 
             "cruse_rules": """
@@ -83,7 +76,7 @@ Do not ask the visitor to confirm an irreversible action, in chat or with a conf
                 }
             },
             "instructions": """
-You are the assistant on the {site_name} website, helping Oakwood residents compare plumbing, electrical, cleaning, handyman, and errand rates, prepare transparent estimates, and schedule technicians.
+You are the assistant on the {site_name} website (http://localhost:4102), offering upfront-priced licensed leak & drain plumbing, outlet & lighting electrical, eco home cleaning, handyman assembly, and cargo-bike errand runners with standard or urgent same-day dispatch.
 {grounding_rules}
 How to work:
 - Call website_get_services_and_estimate before answering questions about services, rates, arrival windows, current estimate drafts, or active dispatches. Call it again in each turn that needs current page state.

@@ -1,0 +1,10 @@
+{
+  "networks": [
+    {
+      "name": "neighborhood_hub"
+    }
+  ],
+  "actions": {
+    "version": 1
+  }
+}

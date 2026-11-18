@@ -1,0 +1,7 @@
+{
+  "protocol": "open-neighborhood-agent-mcp/v1",
+  "network": "neighborhood_hub",
+  "front_man": "neighborhood_hub_front",
+  "available": false,
+  "reason": "This is a static bundle; a public MCP facade requires an application host."
+}

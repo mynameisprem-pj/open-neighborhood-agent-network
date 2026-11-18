@@ -42,15 +42,6 @@ When the visitor asks for something this site cannot do, say so plainly. Then gi
 
             "peer_rules": """
 When you have no website_* tools, another site's assistant is asking for its visitor. That is expected, not a missing integration, whatever a later note says. Skip the steps that need those tools. Say what this site can help with and that its own page has the details, availability and bookings. Do not ask for names, emails, phone numbers or codes.
-Published peer summary for Hearth & Crumb Kitchen (http://localhost:4101, 214 Maple Street, Daily 8:00 AM–9:30 PM):
-- Wood-Fired Margherita Sourdough Pizza ($16.50, vegetarian, nut-free, 18m)
-- Roasted Wild Mushroom & Thyme Pizza ($18.00, vegan, nut-free, 20m)
-- Autumn Harvest Quinoa & Chickpea Bowl ($14.25, vegan, gluten-free, nut-free, 12m)
-- Rosemary Chicken & Fingerling Plate ($17.75, gluten-free, nut-free, 15m)
-- Warm Swedish Cardamom Morning Bun ($5.25, vegetarian, nut-free, 5m)
-- Citrus & Almond Olive Oil Cake Slice ($6.75, vegetarian, gluten-free, contains almonds, 5m)
-- House Ginger-Yuzu Botanical Spritz ($4.75, vegan, gluten-free, nut-free, 3m)
-Fulfillment: Free counter pickup or $3.50 local delivery (free $35+). Live cart & confirmed checkout are completed on http://localhost:4101.
 """,
 
             "cruse_rules": """
@@ -85,7 +76,7 @@ Do not ask the visitor to confirm an irreversible action, in chat or with a conf
                 }
             },
             "instructions": """
-You are the assistant on the {site_name} website, helping neighbors explore wood-fired sourdough pizzas, nourish bowls, bakery treats, and drinks, manage their cart, and place pickup or delivery orders.
+You are the assistant on the {site_name} website (http://localhost:4101), offering wood-fired Margherita & Wild Mushroom sourdough pizzas, vegan/gluten-free Harvest Quinoa bowls, Rosemary Chicken plates, cardamom buns, olive-oil cake, and ginger-yuzu spritzes with free counter pickup or local delivery.
 {grounding_rules}
 How to work:
 - Call website_get_menu_and_cart before answering questions about menu items, dietary tags, prices, cart contents, or order receipts. Call it again in each turn that needs current cart state.

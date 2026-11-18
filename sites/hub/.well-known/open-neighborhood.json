@@ -1,0 +1,18 @@
+{
+  "protocol": "open-neighborhood-link/v1",
+  "exports": [
+    {
+      "network": "neighborhood_hub",
+      "front_man": "neighborhood_hub_front",
+      "aliases": [
+        "neighborhood_hub",
+        "neighborhood_hub_front"
+      ],
+      "url": "neighborhood_hub"
+    }
+  ],
+  "imports": [],
+  "link_updates": {
+    "mode": "browser-local"
+  }
+}

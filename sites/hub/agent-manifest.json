@@ -1,0 +1,85 @@
+{
+  "brand": "Oakwood Neighborhood Hub Assistant",
+  "networks": [
+    {
+      "name": "neighborhood_hub",
+      "front_man": "neighborhood_hub_front",
+      "hocon": "./neighborhood_hub.network.json",
+      "description": "Discover Oakwood local food, home repair/errand services, and clinic/tutoring/tool bookings—ask partner assistants after your approval and build an actionable local plan.",
+      "tags": [
+        "agentified-website",
+        "hub",
+        "discovery",
+        "multi-agent",
+        "neighborhood"
+      ],
+      "sample_queries": [
+        "Which local businesses are in the Oakwood directory and what can each help with?",
+        "Ask Hearth & Crumb Kitchen what kinds of food and dietary options it offers.",
+        "I need a leaky sink fixed and a tutoring session—ask CivicFix and Oakwood Scheduling what they offer and add both to my plan.",
+        "Can you take my credit card number here or dispatch 911 emergency services?"
+      ]
+    }
+  ],
+  "llm_router": {
+    "base_url": "https://api.otari.ai/api/v1",
+    "mock": false,
+    "byok_router": "https://api.otari.ai/api/v1"
+  },
+  "allowed_peers": [
+    "http://localhost:4101",
+    "http://localhost:4102",
+    "http://localhost:4103"
+  ],
+  "peer_policy": {
+    "mode": "closed",
+    "deny_origins": [],
+    "note": "Calls only the partner sites in allowed_peers after the visitor agrees on the consent card."
+  },
+  "agent_mcp": {
+    "protocol": "open-neighborhood-agent-mcp/v1",
+    "network": "neighborhood_hub",
+    "front_man": "neighborhood_hub_front",
+    "available": false,
+    "reason": "This is a static bundle; a public MCP facade requires an application host."
+  },
+  "theme": {
+    "primary": "#1d4ed8"
+  },
+  "linking": {
+    "protocol": "open-neighborhood-link/v1",
+    "exports": [
+      {
+        "network": "neighborhood_hub",
+        "front_man": "neighborhood_hub_front",
+        "aliases": [
+          "neighborhood_hub",
+          "neighborhood_hub_front"
+        ],
+        "url": "neighborhood_hub"
+      }
+    ],
+    "imports": [],
+    "link_updates": {
+      "mode": "browser-local"
+    }
+  },
+  "deployment": {
+    "mode": "static",
+    "self_contained_runtime": true,
+    "browser_mock": false,
+    "direct_byok": true,
+    "direct_mcp_requires_cors": true,
+    "public_mcp_facade": false
+  },
+  "actions": {
+    "version": 1,
+    "module": "./site-actions.js",
+    "bridge": "./bridge/action-bridge.html",
+    "agentTools": [
+      "get_hub_directory_and_plan",
+      "add_plan_handoff",
+      "remove_plan_item"
+    ]
+  }
+}

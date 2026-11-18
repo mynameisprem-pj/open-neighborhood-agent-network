@@ -129,20 +129,18 @@ export function checkPeerPolicy(callerManifest, targetPeerUrl) {
     if (denyOrigins.includes(origin)) {
       return { allowed: false, origin, reason: `Origin ${origin} is explicitly in deny_origins.` };
     }
+    const allowedOrigins = Array.isArray(callerManifest?.allowed_peers) ? callerManifest.allowed_peers : [];
+    if (allowedOrigins.includes(origin)) {
+      return { allowed: true, origin, reason: `Origin ${origin} is explicitly in allowed_peers.` };
+    }
     if (mode === 'open') {
       return { allowed: true, origin, reason: 'Caller peer_policy.mode is open.' };
     }
-    if (mode === 'closed' || !mode) {
-      return { allowed: false, origin, reason: 'Caller peer_policy.mode is closed (external peers disabled).' };
-    }
-    if (mode === 'allowlist') {
-      const allowedOrigins = Array.isArray(callerManifest.allowed_peers) ? callerManifest.allowed_peers : [];
-      if (allowedOrigins.includes(origin)) {
-        return { allowed: true, origin, reason: `Origin ${origin} is explicitly allowlisted.` };
-      }
-      return { allowed: false, origin, reason: `Origin ${origin} is NOT in caller allowed_peers.` };
-    }
-    return { allowed: false, origin, reason: `Unknown peer_policy mode "${mode}" — failing closed.` };
+    return {
+      allowed: false,
+      origin,
+      reason: `Origin ${origin} is not in allowed_peers (peer_policy.mode is "${mode || 'closed'}") — failing closed.`
+    };
   } catch (err) {
     return { allowed: false, origin: null, reason: `Invalid peer URL — failing closed: ${err.message}` };
   }
