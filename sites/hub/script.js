@@ -3,7 +3,7 @@
  * Shared by manual Hub UI and website_* Hub agent tools.
  */
 
-import { NeighborhoodDiscoveryIndex } from '/packages/discovery-index/src/index.js';
+import { NeighborhoodDiscoveryIndex } from '../../packages/discovery-index/src/index.js';
 
 const STORAGE_KEY = 'open_neighborhood_hub_state_v1';
 

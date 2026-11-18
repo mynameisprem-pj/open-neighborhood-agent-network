@@ -1,3 +1,6 @@
 {
-  "links": {}
+  "version": 1,
+  "networks": {
+    "hearth_crumb_assistant": {}
+  }
 }
