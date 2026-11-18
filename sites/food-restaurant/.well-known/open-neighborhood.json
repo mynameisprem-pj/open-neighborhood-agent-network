@@ -1,0 +1,18 @@
+{
+  "protocol": "open-neighborhood-link/v1",
+  "exports": [
+    {
+      "network": "hearth_crumb_assistant",
+      "front_man": "hearth_crumb_front",
+      "aliases": [
+        "hearth_crumb_assistant",
+        "hearth_crumb_front"
+      ],
+      "url": "hearth_crumb_assistant"
+    }
+  ],
+  "imports": [],
+  "link_updates": {
+    "mode": "browser-local"
+  }
+}

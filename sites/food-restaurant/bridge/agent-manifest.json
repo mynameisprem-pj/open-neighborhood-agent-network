@@ -1,0 +1,10 @@
+{
+  "networks": [
+    {
+      "name": "hearth_crumb_assistant"
+    }
+  ],
+  "actions": {
+    "version": 1
+  }
+}

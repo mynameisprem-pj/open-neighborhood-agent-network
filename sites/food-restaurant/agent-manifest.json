@@ -1,0 +1,82 @@
+{
+  "brand": "Hearth & Crumb Kitchen Assistant",
+  "networks": [
+    {
+      "name": "hearth_crumb_assistant",
+      "front_man": "hearth_crumb_front",
+      "hocon": "./hearth_crumb_assistant.network.json",
+      "description": "Browse wood-fired sourdough pizzas, nourish bowls, and artisan bakery items, filter by dietary needs, update your live cart, and confirm pickup or local delivery orders.",
+      "tags": [
+        "agentified-website",
+        "food",
+        "restaurant",
+        "bakery",
+        "neighborhood"
+      ],
+      "sample_queries": [
+        "Which dishes on the menu are both vegan and gluten-free?",
+        "Add 2 Roasted Wild Mushroom pizzas and 1 Ginger-Yuzu Spritz to my cart.",
+        "Switch my order to pickup and place the order under Alex.",
+        "Can I apply a promo coupon code or track my delivery driver on a map?"
+      ]
+    }
+  ],
+  "llm_router": {
+    "base_url": "https://api.otari.ai/api/v1",
+    "mock": false,
+    "byok_router": "https://api.otari.ai/api/v1"
+  },
+  "allowed_peers": [],
+  "peer_policy": {
+    "mode": "closed",
+    "deny_origins": [],
+    "note": "Local agents and page-local kitchen cart actions only."
+  },
+  "agent_mcp": {
+    "protocol": "open-neighborhood-agent-mcp/v1",
+    "network": "hearth_crumb_assistant",
+    "front_man": "hearth_crumb_front",
+    "available": false,
+    "reason": "This is a static bundle; a public MCP facade requires an application host."
+  },
+  "theme": {
+    "primary": "#c2410c"
+  },
+  "linking": {
+    "protocol": "open-neighborhood-link/v1",
+    "exports": [
+      {
+        "network": "hearth_crumb_assistant",
+        "front_man": "hearth_crumb_front",
+        "aliases": [
+          "hearth_crumb_assistant",
+          "hearth_crumb_front"
+        ],
+        "url": "hearth_crumb_assistant"
+      }
+    ],
+    "imports": [],
+    "link_updates": {
+      "mode": "browser-local"
+    }
+  },
+  "deployment": {
+    "mode": "static",
+    "self_contained_runtime": true,
+    "browser_mock": false,
+    "direct_byok": true,
+    "direct_mcp_requires_cors": true,
+    "public_mcp_facade": false
+  },
+  "actions": {
+    "version": 1,
+    "module": "./site-actions.js",
+    "bridge": "./bridge/action-bridge.html",
+    "agentTools": [
+      "get_menu_and_cart",
+      "add_cart_item",
+      "update_cart_item",
+      "submit_order"
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "protocol": "open-neighborhood-agent-mcp/v1",
+  "network": "hearth_crumb_assistant",
+  "front_man": "hearth_crumb_front",
+  "available": false,
+  "reason": "This is a static bundle; a public MCP facade requires an application host."
+}
