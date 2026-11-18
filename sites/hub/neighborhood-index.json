@@ -1,0 +1,36 @@
+{
+  "directory": "Oakwood Open Neighborhood Directory",
+  "version": "1.0.0",
+  "peers": [
+    {
+      "id": "hearth-crumb-food",
+      "title": "Hearth & Crumb Kitchen",
+      "category": "food",
+      "origin": "http://localhost:4101",
+      "networkName": "hearth_crumb_assistant",
+      "summary": "Wood-fired sourdough pizzas, vegan & gluten-free nourish bowls, artisan bakery, pickup & local delivery.",
+      "capabilities": ["menu search", "dietary filtering", "live cart", "pickup & delivery orders"],
+      "tags": ["pizza", "bakery", "lunch", "dinner", "vegan", "gluten-free", "food"]
+    },
+    {
+      "id": "civicfix-services",
+      "title": "CivicFix Local Services & Errands",
+      "category": "services",
+      "origin": "http://localhost:4102",
+      "networkName": "civicfix_assistant",
+      "summary": "Upfront cooperative estimates for licensed plumbing, electrical, eco-cleaning, handyman repairs, and cargo-bike errands.",
+      "capabilities": ["service quotes", "same-day urgent dispatch", "plumbing", "cleaning", "errands"],
+      "tags": ["plumber", "electrician", "cleaning", "handyman", "errands", "repairs"]
+    },
+    {
+      "id": "oakwood-booking",
+      "title": "Oakwood Community Scheduling",
+      "category": "appointments",
+      "origin": "http://localhost:4103",
+      "networkName": "oakwood_booking_assistant",
+      "summary": "Walk-in nurse practitioner clinic slots, physical therapy, 1-on-1 STEM tutoring, and maker/tool-library rentals.",
+      "capabilities": ["clinic checkups", "tutoring sessions", "laser cutter & tool rentals", "slot booking"],
+      "tags": ["clinic", "doctor", "nurse", "tutor", "math", "python", "laser cutter", "pressure washer"]
+    }
+  ]
+}
