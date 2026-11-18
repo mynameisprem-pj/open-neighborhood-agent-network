@@ -10,8 +10,9 @@
   "scripts": {
     "setup:official": "node scripts/sync-official-runtime.mjs",
     "build:networks": "node scripts/build-networks.mjs",
-    "dev": "node scripts/dev-servers.mjs",
-    "validate:specs": "node scripts/validate-manifests.mjs"
+    "validate:specs": "node scripts/validate-manifests.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "dev": "node scripts/dev-servers.mjs"
   },
   "engines": {
     "node": ">=20.0.0"
