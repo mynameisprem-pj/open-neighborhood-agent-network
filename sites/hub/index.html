@@ -1,1 +1,94 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Neighborhood Hub</title></head><body><h1>Neighborhood Hub (Origin :4100)</h1></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oakwood Neighborhood Hub — Open Agentic Web</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="hero-bar">
+    <div class="hero-title">
+      <div class="hero-badge" aria-hidden="true">🏘️</div>
+      <div>
+        <h1>Oakwood Neighborhood Hub</h1>
+        <p class="hero-sub">Discover local food, home services, and appointments across independent websites — 100% in your browser with explicit consent.</p>
+      </div>
+    </div>
+    <div class="hero-pills">
+      <span class="hero-pill">🔑 BYOK Client Execution</span>
+      <span class="hero-pill">🛡️ Fail-Closed Peer Policy</span>
+      <span class="hero-pill">🔒 Private Context Shield</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section>
+      <div class="card">
+        <div class="card-head">
+          <h2>My Neighborhood Action Plan</h2>
+          <span style="font-size:12px;font-family:monospace;color:var(--muted);" id="plan-version">plan v1</span>
+        </div>
+        <div id="plan-container" aria-live="polite"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Live Discovered Neighborhood Websites</h2>
+          <button type="button" id="refresh-peers-btn" style="border:1px solid var(--border);background:var(--surface-alt);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;">
+            ↻ Re-Probe Manifests
+          </button>
+        </div>
+        <div class="peer-grid" id="peer-grid"></div>
+
+        <form class="custom-peer-form" id="custom-peer-form">
+          <input type="text" id="peer-title" placeholder="Add another agentic business name" required style="flex:1.2;min-width:160px;">
+          <input type="url" id="peer-origin" placeholder="http://localhost:4104" required style="flex:1.2;min-width:160px;">
+          <select id="peer-cat">
+            <option value="food">Food</option>
+            <option value="services">Services</option>
+            <option value="appointments">Appointments</option>
+          </select>
+          <button type="submit" style="background:var(--text);color:#fff;border:none;border-radius:8px;padding:7px 13px;font-size:12px;font-weight:700;cursor:pointer;">
+            + Probe &amp; Add to Index
+          </button>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Trust, Consent &amp; Private Context Shield (sly_data)</h2>
+          <button type="button" id="reset-consent-btn" style="border:1px solid var(--border);background:#fff;border-radius:8px;padding:6px 11px;font-size:12px;font-weight:600;cursor:pointer;">
+            Reset Session Consents
+          </button>
+        </div>
+        <div class="privacy-grid">
+          <div class="priv-box priv-shared">
+            <strong style="color:var(--green);display:block;margin-bottom:6px;">✓ Hub-Readable Preferences</strong>
+            <div id="priv-shared-list"></div>
+          </div>
+          <div class="priv-box priv-blocked">
+            <strong style="color:var(--red);display:block;margin-bottom:6px;">✕ Strictly Withheld From Models &amp; Peers</strong>
+            <div id="priv-blocked-list"></div>
+          </div>
+        </div>
+        <ul class="audit-list" id="audit-list">
+          <li class="audit-item"><span>No external peer calls made yet in this session.</span><span>fail-closed ready</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <aside class="assistant-column">
+      <div class="assistant-shell">
+        <div class="assistant-banner">
+          <span><strong>Multi-Site Hub Orchestrator</strong> • 3 allowlisted peers</span>
+          <span style="color:var(--muted);">Consent card before every peer</span>
+        </div>
+        <div id="assistant-root"></div>
+      </div>
+    </aside>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
