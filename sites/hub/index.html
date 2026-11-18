@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Oakwood Neighborhood Hub — Open Agentic Web</title>
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="/packages/consent-policy-ui/src/assistant-host.css">
 </head>
 <body>
   <header class="hero-bar">
@@ -84,7 +85,15 @@
           <span><strong>Multi-Site Hub Orchestrator</strong> • 3 allowlisted peers</span>
           <span style="color:var(--muted);">Consent card before every peer</span>
         </div>
-        <div id="assistant-root"></div>
+        <div id="assistant-root">
+          <div data-ns-slot="header"></div>
+          <div data-ns-slot="settings"></div>
+          <div data-ns-slot="chat"></div>
+          <details class="agent-network-drawer">
+            <summary>Inspect Live Agent Network &amp; Peer Tools</summary>
+            <div data-ns-slot="agents"></div>
+          </details>
+        </div>
       </div>
     </aside>
   </main>

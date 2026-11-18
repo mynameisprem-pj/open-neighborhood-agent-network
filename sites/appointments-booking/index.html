@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Oakwood Community Scheduling — Clinic, Tutoring & Equipment</title>
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="/packages/consent-policy-ui/src/assistant-host.css">
 </head>
 <body>
   <header class="topbar">
@@ -15,7 +16,7 @@
         <p class="brand-meta">40 Pine Street &amp; Health Commons • Clinic Visits, 1-on-1 Tutoring &amp; Maker Equipment</p>
       </div>
     </div>
-    <a class="hub-link" href="http://localhost:4100">← Neighborhood Hub</a>
+    <a class="hub-link" href="http://127.0.0.1:4100">← Neighborhood Hub</a>
   </header>
 
   <main class="layout">
@@ -59,7 +60,15 @@
           <span><strong>BYOK Booking Assistant</strong> • Zero host inference</span>
           <span id="audit-status" style="color:var(--muted);">Slot confirmation required</span>
         </div>
-        <div id="assistant-root"></div>
+        <div id="assistant-root">
+          <div data-ns-slot="header"></div>
+          <div data-ns-slot="settings"></div>
+          <div data-ns-slot="chat"></div>
+          <details class="agent-network-drawer">
+            <summary>Inspect Live Agent Network &amp; Peer Tools</summary>
+            <div data-ns-slot="agents"></div>
+          </details>
+        </div>
       </div>
     </aside>
   </main>

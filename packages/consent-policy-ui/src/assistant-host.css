@@ -1,0 +1,159 @@
+/* Shared Open Agentic Web Composed Assistant Layout (adapted from Cognizant templates/assistant.css) */
+
+.layout {
+  grid-template-columns: minmax(0, 1.18fr) minmax(430px, 0.95fr) !important;
+}
+
+@media (max-width: 1080px) {
+  .layout {
+    grid-template-columns: 1fr !important;
+  }
+  .assistant-column {
+    position: static !important;
+  }
+}
+
+.assistant-shell {
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+#assistant-root {
+  --ns-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --ns-bg: #ffffff;
+  --ns-fg: #1f2328;
+  --ns-primary: var(--accent, #2563eb);
+  --ns-accent: var(--accent, #2563eb);
+  --ns-border: var(--border, #d0d7de);
+  --ns-panelbg: #ffffff;
+  --ns-msgbg: #f6f8fa;
+  --ns-muted: var(--muted, #59636e);
+  min-height: 0 !important;
+  overflow: visible !important;
+  display: flex;
+  flex-direction: column;
+}
+
+#assistant-root [data-ns-slot="header"] {
+  border-bottom: 1px solid var(--ns-border);
+}
+
+#assistant-root [data-ns-slot="settings"] {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Clean, comfortable chat height once mounted */
+#assistant-root.ns-composed-app [data-ns-slot="chat"] {
+  height: 540px;
+  display: flex;
+  flex-direction: column;
+}
+
+#assistant-root .ns-chat {
+  background: var(--ns-bg);
+  height: 100%;
+}
+
+/* Prevent site-wide input/label/button rules from distorting BYOK settings or CRUSE forms */
+#assistant-root input[type="checkbox"],
+#assistant-root input[type="radio"] {
+  width: auto;
+}
+
+#assistant-root .ns-header {
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 14px;
+}
+
+#assistant-root .ns-settings-body {
+  padding: 14px;
+  box-sizing: border-box;
+}
+
+#assistant-root .ns-settings-body input,
+#assistant-root .ns-settings-body select {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+#assistant-root .ns-settings-body label {
+  margin: 4px 0;
+  font-weight: 400;
+}
+
+#assistant-root .ns-w-label {
+  font-family: inherit;
+}
+
+#assistant-root .ns-widget label {
+  margin: 0;
+}
+
+#assistant-root .ns-w-radio label,
+#assistant-root .ns-w-multi label,
+#assistant-root .ns-w-toggle {
+  font-weight: 400;
+}
+
+#assistant-root .ns-w-toggle {
+  font-size: 13px;
+}
+
+#assistant-root button {
+  margin: 0;
+}
+
+#assistant-root .ns-w-choice {
+  color: var(--ns-fg);
+}
+
+#assistant-root .ns-devtoggle:not(.on):hover,
+#assistant-root .ns-modal-close:hover {
+  background: transparent;
+}
+
+#assistant-root .ns-w-choice:disabled:hover {
+  background: #fafbfc;
+}
+
+#assistant-root .ns-consent {
+  background: #fffbeb;
+}
+
+#assistant-root .ns-msgs:has(.ns-consent-actions) > .ns-turn-status {
+  display: none;
+}
+
+#assistant-root .ns-msg {
+  overflow-wrap: break-word;
+}
+
+#assistant-root .ns-consent-actions {
+  flex-wrap: wrap;
+}
+
+#assistant-root .ns-consent-actions button {
+  white-space: nowrap;
+}
+
+/* Keep technical Agent Network view tucked neatly in an optional drawer */
+.agent-network-drawer {
+  border-top: 1px solid var(--ns-border);
+  background: #f8fafc;
+  font-size: 12px;
+}
+
+.agent-network-drawer > summary {
+  padding: 9px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--ns-muted);
+  user-select: none;
+}
+
+.agent-network-drawer [data-ns-slot="agents"] {
+  padding: 8px 14px 14px;
+}
