@@ -1,6 +1,6 @@
 import { App } from './script.js';
 import { boot } from './runtime/index.js';
-import { bootNeighborhoodSite } from '../../packages/agentic-runtime-core/src/index.js';
+import { bootNeighborhoodSite, sendPromptToAssistant } from '../../packages/agentic-runtime-core/src/index.js';
 
 const peerGrid = document.getElementById('peer-grid');
 const planContainer = document.getElementById('plan-container');
@@ -18,13 +18,7 @@ const SAMPLE_PROMPTS_BY_CAT = {
   appointments: 'Ask Oakwood Community Scheduling what clinic, tutoring, and equipment bookings it offers, then pin it to my plan.'
 };
 
-function sendPromptToChat(text) {
-  const input = document.querySelector('#assistant-root textarea, #assistant-root input[type="text"]');
-  if (!input) return;
-  input.value = text;
-  input.dispatchEvent(new Event('input', { bubbles: true }));
-  input.focus();
-}
+let runtimeCtx = null;
 
 function renderSnapshot(snap = App.page.getSnapshot()) {
   planVersionEl.textContent = `plan v${snap.version}`;
@@ -100,7 +94,17 @@ function renderSnapshot(snap = App.page.getSnapshot()) {
 
 peerGrid.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-ask-prompt]');
-  if (btn) sendPromptToChat(btn.dataset.askPrompt);
+  if (!btn) return;
+  const res = sendPromptToAssistant(runtimeCtx?.engine, btn.dataset.askPrompt, {
+    autoSendIfKeyPresent: true
+  });
+  if (res.ok) {
+    const originalLabel = btn.textContent;
+    btn.textContent = res.sent ? '✓ Asking Hub…' : '✓ Loaded in Chat →';
+    setTimeout(() => {
+      btn.textContent = originalLabel;
+    }, 1600);
+  }
 });
 
 planContainer.addEventListener('click', (e) => {
@@ -124,7 +128,7 @@ App.page.subscribe(renderSnapshot);
 // Probe all local business manifests immediately, then boot Hub runtime
 await App.page.refreshDirectory();
 
-const runtimeCtx = await bootNeighborhoodSite({
+runtimeCtx = await bootNeighborhoodSite({
   bootRuntime: boot,
   mountSelector: '#assistant-root',
   siteName: 'Oakwood Neighborhood Hub',

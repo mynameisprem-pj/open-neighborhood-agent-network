@@ -1,8 +1,8 @@
 /**
  * @open-neighborhood/agentic-runtime-core
  * Attaches standardized Open Neighborhood Consent Cards, Irreversible Write Confirmations,
- * Private Context (sly_data) Boundary Previews, and Audit Telemetry directly to the
- * official neuro-san-web browser Engine.
+ * Private Context (sly_data) Boundary Previews, Chat Prompt Prefill, and Audit Telemetry
+ * directly to the official neuro-san-web browser Engine.
  */
 
 import { createTrustDialogs } from '../../consent-policy-ui/src/index.js';
@@ -31,6 +31,82 @@ export class TrustAuditLog {
     return entry;
   }
 }
+
+/**
+ * Safely locates the live chat composer inside [data-ns-slot="chat"] (ignoring hidden
+ * BYOK settings inputs and in-message CRUSE forms), populates the prompt, scrolls into view,
+ * and optionally triggers Send if a BYOK key is already configured.
+ */
+export function sendPromptToAssistant(engine, text, { autoSendIfKeyPresent = false } = {}) {
+  const chatSlot =
+    document.querySelector('#assistant-root [data-ns-slot="chat"]') ||
+    document.querySelector('[data-ns-slot="chat"]') ||
+    document.querySelector('#assistant-root');
+
+  if (!chatSlot) return { ok: false, reason: 'Chat container not mounted.' };
+
+  const candidates = chatSlot.querySelectorAll('textarea, input[type="text"], input:not([type])');
+  let composer = null;
+  for (const el of candidates) {
+    if (
+      el.closest('[data-ns-slot="settings"]') ||
+      el.closest('.ns-msgs') ||
+      el.closest('.ns-widget')
+    ) {
+      continue;
+    }
+    composer = el;
+    break;
+  }
+
+  if (!composer) return { ok: false, reason: 'Chat composer input not found.' };
+
+  const proto =
+    composer instanceof HTMLTextAreaElement
+      ? HTMLTextAreaElement.prototype
+      : HTMLInputElement.prototype;
+  const nativeSetter = Object.getOwnPropertyDescriptor(proto, 'value')?.set;
+  if (nativeSetter) {
+    nativeSetter.call(composer, text);
+  } else {
+    composer.value = text;
+  }
+
+  composer.dispatchEvent(new Event('input', { bubbles: true }));
+  composer.dispatchEvent(new Event('change', { bubbles: true }));
+  composer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  composer.focus();
+
+  composer.style.transition = 'box-shadow 180ms ease';
+  composer.style.boxShadow = '0 0 0 3px rgba(29, 78, 216, 0.38)';
+  setTimeout(() => {
+    composer.style.boxShadow = '';
+  }, 1400);
+
+  const hasKey = Boolean(
+    engine?.byokKey ||
+      sessionStorage.getItem('ns_byok_key') ||
+      localStorage.getItem('ns_byok_profiles_v1')
+  );
+
+  if (autoSendIfKeyPresent && hasKey && engine?.byokKey) {
+    const formOrRow = composer.closest('form') || composer.parentElement;
+    const sendBtn =
+      formOrRow?.querySelector('button[type="submit"]') ||
+      Array.from(formOrRow?.querySelectorAll('button') || []).find((b) =>
+        /send|submit|ask/i.test(b.textContent || b.getAttribute('aria-label') || '')
+      ) ||
+      formOrRow?.querySelector('button');
+
+    if (sendBtn && !sendBtn.disabled) {
+      setTimeout(() => sendBtn.click(), 80);
+      return { ok: true, sent: true };
+    }
+  }
+
+  return { ok: true, sent: false };
+}
+
 
 /**
  * Boots a site's local /runtime/index.js and upgrades engine.onConsent + engine.onActionConfirm
@@ -69,7 +145,7 @@ export async function bootNeighborhoodSite({
     const decision = await dialogs.requestPeerConsent({
       peerUrl,
       peerTitle: friendlyTitle,
-      peerPolicy: mode || 'allowlist',
+      peerPolicy: mode || 'closed',
       taskSummary:
         info.reason ||
         info.description ||
@@ -124,11 +200,20 @@ export async function bootNeighborhoodSite({
     return Boolean(decision.confirmed);
   };
 
+  // 3. Support transparent cross-site handoff prefill (?prompt=...) without auto-executing
+  const prefill = new URLSearchParams(window.location.search).get('prompt');
+  if (prefill) {
+    setTimeout(() => {
+      sendPromptToAssistant(engine, prefill, { autoSendIfKeyPresent: false });
+    }, 100);
+  }
+
   return {
     engine,
     trace,
     actions,
     dialogs,
-    audit
+    audit,
+    sendPrompt: (text, opts) => sendPromptToAssistant(engine, text, opts)
   };
 }

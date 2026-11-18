@@ -133,14 +133,4 @@ bootNeighborhoodSite({
       auditStatusEl.textContent = `Last check: ${events[0].type.replace(/_/g, ' ')}`;
     }
   }
-}).then(() => {
-  const prefill = new URLSearchParams(window.location.search).get('prompt');
-  if (prefill) {
-    const input = document.querySelector('#assistant-root textarea, #assistant-root input[type="text"]');
-    if (input) {
-      input.value = prefill;
-      input.dispatchEvent(new Event('input', { bubbles: true }));
-      input.focus();
-    }
-  }
 });
