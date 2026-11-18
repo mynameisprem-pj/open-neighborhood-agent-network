@@ -1,6 +1,6 @@
 /**
  * @open-neighborhood/network-linker
- * Conforms to the Worldwide Agentic Web MVP Specification (cognizant-ai-labs/agentic-web)
+ * Conforms to the Worldwide Agentic Web Specification (cognizant-ai-labs/agentic-web)
  */
 
 export const HANDOFF_OUTCOME = Object.freeze({
@@ -10,7 +10,24 @@ export const HANDOFF_OUTCOME = Object.freeze({
   UNKNOWN_OUTCOME: 'unknown_outcome'
 });
 
-const VALID_PEER_POLICIES = new Set(['strict', 'allowlist', 'open']);
+const VALID_POLICY_MODES = new Set(['closed', 'strict', 'allowlist', 'open']);
+
+/**
+ * Normalizes peer_policy whether declared as an official { mode, deny_origins } object or string.
+ */
+export function normalizePeerPolicy(peerPolicy) {
+  if (typeof peerPolicy === 'string') {
+    return { mode: peerPolicy === 'strict' ? 'closed' : peerPolicy, denyOrigins: [] };
+  }
+  if (peerPolicy && typeof peerPolicy === 'object' && !Array.isArray(peerPolicy)) {
+    const rawMode = peerPolicy.mode || 'closed';
+    return {
+      mode: rawMode === 'strict' ? 'closed' : rawMode,
+      denyOrigins: Array.isArray(peerPolicy.deny_origins) ? peerPolicy.deny_origins : []
+    };
+  }
+  return { mode: null, denyOrigins: [] };
+}
 
 /**
  * Validates an agent-manifest.json object. Fails closed on missing or unsafe fields.
@@ -37,12 +54,13 @@ export function validateManifest(manifest, sourceLabel = 'agent-manifest.json') 
     });
   }
 
-  if (!manifest.peer_policy || !VALID_PEER_POLICIES.has(manifest.peer_policy)) {
-    errors.push(`${sourceLabel}: "peer_policy" must be one of "strict", "allowlist", or "open".`);
+  const { mode } = normalizePeerPolicy(manifest.peer_policy);
+  if (!mode || !VALID_POLICY_MODES.has(mode)) {
+    errors.push(`${sourceLabel}: "peer_policy.mode" must be one of "closed", "allowlist", or "open".`);
   }
 
-  if (manifest.peer_policy === 'allowlist' && !Array.isArray(manifest.allowed_peers)) {
-    errors.push(`${sourceLabel}: "allowed_peers" array is required when peer_policy is "allowlist".`);
+  if (mode === 'allowlist' && !Array.isArray(manifest.allowed_peers)) {
+    errors.push(`${sourceLabel}: "allowed_peers" array is required when peer_policy.mode is "allowlist".`);
   }
 
   return { valid: errors.length === 0, errors };
@@ -57,25 +75,18 @@ export function validateNetworkDefinition(networkDoc, expectedFrontMan, sourceLa
     return { valid: false, errors: [`${sourceLabel}: Root must be a JSON object.`] };
   }
 
-  if (!Array.isArray(networkDoc.agents) || networkDoc.agents.length === 0) {
-    errors.push(`${sourceLabel}: "agents" must be a non-empty array of data-only agent definitions.`);
-  } else {
-    const agentNames = new Set();
-    for (const agent of networkDoc.agents) {
-      if (!agent.name || typeof agent.name !== 'string') {
-        errors.push(`${sourceLabel}: Every agent must have a string "name".`);
-      } else {
-        agentNames.add(agent.name);
-      }
-      if (typeof agent.instructions !== 'string' || agent.instructions.trim().length === 0) {
-        errors.push(`${sourceLabel}: Agent "${agent.name || '?'}" must have non-empty "instructions".`);
-      }
-      if (agent.tools !== undefined && !Array.isArray(agent.tools)) {
-        errors.push(`${sourceLabel}: Agent "${agent.name || '?'}" "tools" must be an array.`);
-      }
-    }
-    if (expectedFrontMan && !agentNames.has(expectedFrontMan)) {
-      errors.push(`${sourceLabel}: Declared front_man "${expectedFrontMan}" does not exist in agents[].`);
+  const agentsList = Array.isArray(networkDoc.agents)
+    ? networkDoc.agents
+    : Array.isArray(networkDoc.tools)
+      ? networkDoc.tools
+      : null;
+
+  if (!agentsList || agentsList.length === 0) {
+    errors.push(`${sourceLabel}: Network must contain a non-empty "agents" or "tools" array.`);
+  } else if (expectedFrontMan) {
+    const names = new Set(agentsList.map((a) => a?.name).filter(Boolean));
+    if (!names.has(expectedFrontMan)) {
+      errors.push(`${sourceLabel}: Declared front_man "${expectedFrontMan}" not found in network graph.`);
     }
   }
 
@@ -84,7 +95,6 @@ export function validateNetworkDefinition(networkDoc, expectedFrontMan, sourceLa
 
 /**
  * Parses a canonical peer network URL (e.g. "http://localhost:4101/hearth_crumb_assistant")
- * into { origin, siteBaseUrl, networkName, manifestUrl } per MVP Spec Section 1.2.
  */
 export function parsePeerNetworkUrl(peerNetworkUrl) {
   const parsed = new URL(peerNetworkUrl);
@@ -109,27 +119,30 @@ export function parsePeerNetworkUrl(peerNetworkUrl) {
 }
 
 /**
- * Enforces caller peer_policy ("strict" | "allowlist" | "open") Fail-Closed.
+ * Enforces caller peer_policy ({ mode: "closed" | "allowlist" | "open", deny_origins: [] }) Fail-Closed.
  */
 export function checkPeerPolicy(callerManifest, targetPeerUrl) {
   try {
     const { origin } = parsePeerNetworkUrl(targetPeerUrl);
-    const policy = callerManifest?.peer_policy ?? 'strict';
+    const { mode, denyOrigins } = normalizePeerPolicy(callerManifest?.peer_policy);
 
-    if (policy === 'open') {
-      return { allowed: true, origin, reason: 'Caller peer_policy is open.' };
+    if (denyOrigins.includes(origin)) {
+      return { allowed: false, origin, reason: `Origin ${origin} is explicitly in deny_origins.` };
     }
-    if (policy === 'strict') {
-      return { allowed: false, origin, reason: 'Caller peer_policy is strict (external peers disabled).' };
+    if (mode === 'open') {
+      return { allowed: true, origin, reason: 'Caller peer_policy.mode is open.' };
     }
-    if (policy === 'allowlist') {
+    if (mode === 'closed' || !mode) {
+      return { allowed: false, origin, reason: 'Caller peer_policy.mode is closed (external peers disabled).' };
+    }
+    if (mode === 'allowlist') {
       const allowedOrigins = Array.isArray(callerManifest.allowed_peers) ? callerManifest.allowed_peers : [];
       if (allowedOrigins.includes(origin)) {
         return { allowed: true, origin, reason: `Origin ${origin} is explicitly allowlisted.` };
       }
       return { allowed: false, origin, reason: `Origin ${origin} is NOT in caller allowed_peers.` };
     }
-    return { allowed: false, origin, reason: `Unknown peer_policy "${policy}" — failing closed.` };
+    return { allowed: false, origin, reason: `Unknown peer_policy mode "${mode}" — failing closed.` };
   } catch (err) {
     return { allowed: false, origin: null, reason: `Invalid peer URL — failing closed: ${err.message}` };
   }
