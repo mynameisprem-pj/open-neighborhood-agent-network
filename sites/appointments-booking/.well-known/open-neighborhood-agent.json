@@ -1,0 +1,7 @@
+{
+  "protocol": "open-neighborhood-agent-mcp/v1",
+  "network": "oakwood_booking_assistant",
+  "front_man": "oakwood_booking_front",
+  "available": false,
+  "reason": "This is a static bundle; a public MCP facade requires an application host."
+}

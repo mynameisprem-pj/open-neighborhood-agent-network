@@ -1,0 +1,83 @@
+{
+  "brand": "Oakwood Community Scheduling Assistant",
+  "networks": [
+    {
+      "name": "oakwood_booking_assistant",
+      "front_man": "oakwood_booking_front",
+      "hocon": "./oakwood_booking_assistant.network.json",
+      "description": "Check open time slots and reserve Oakwood clinic visits, 1-on-1 tutoring sessions, and community maker/tool-library equipment.",
+      "tags": [
+        "agentified-website",
+        "appointments",
+        "clinic",
+        "tutoring",
+        "equipment",
+        "booking"
+      ],
+      "sample_queries": [
+        "What open clinic, tutoring, or equipment slots are available today?",
+        "Hold the Today 5:00 PM Math & Python tutoring slot for me.",
+        "Confirm my held booking under Samira for linear algebra exam prep.",
+        "Can you refill a controlled prescription without an exam or handle an emergency?"
+      ]
+    }
+  ],
+  "llm_router": {
+    "base_url": "https://api.otari.ai/api/v1",
+    "mock": false,
+    "byok_router": "https://api.otari.ai/api/v1"
+  },
+  "allowed_peers": [],
+  "peer_policy": {
+    "mode": "closed",
+    "deny_origins": [],
+    "note": "Local agents and page-local appointment booking actions only."
+  },
+  "agent_mcp": {
+    "protocol": "open-neighborhood-agent-mcp/v1",
+    "network": "oakwood_booking_assistant",
+    "front_man": "oakwood_booking_front",
+    "available": false,
+    "reason": "This is a static bundle; a public MCP facade requires an application host."
+  },
+  "theme": {
+    "primary": "#4338ca"
+  },
+  "linking": {
+    "protocol": "open-neighborhood-link/v1",
+    "exports": [
+      {
+        "network": "oakwood_booking_assistant",
+        "front_man": "oakwood_booking_front",
+        "aliases": [
+          "oakwood_booking_assistant",
+          "oakwood_booking_front"
+        ],
+        "url": "oakwood_booking_assistant"
+      }
+    ],
+    "imports": [],
+    "link_updates": {
+      "mode": "browser-local"
+    }
+  },
+  "deployment": {
+    "mode": "static",
+    "self_contained_runtime": true,
+    "browser_mock": false,
+    "direct_byok": true,
+    "direct_mcp_requires_cors": true,
+    "public_mcp_facade": false
+  },
+  "actions": {
+    "version": 1,
+    "module": "./site-actions.js",
+    "bridge": "./bridge/action-bridge.html",
+    "agentTools": [
+      "get_schedule_and_bookings",
+      "hold_slot_selection",
+      "confirm_appointment_booking",
+      "cancel_booking"
+    ]
+  }
+}

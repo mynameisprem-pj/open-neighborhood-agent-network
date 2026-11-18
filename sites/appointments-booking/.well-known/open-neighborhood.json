@@ -1,0 +1,18 @@
+{
+  "protocol": "open-neighborhood-link/v1",
+  "exports": [
+    {
+      "network": "oakwood_booking_assistant",
+      "front_man": "oakwood_booking_front",
+      "aliases": [
+        "oakwood_booking_assistant",
+        "oakwood_booking_front"
+      ],
+      "url": "oakwood_booking_assistant"
+    }
+  ],
+  "imports": [],
+  "link_updates": {
+    "mode": "browser-local"
+  }
+}

@@ -1,1 +1,69 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Oakwood Booking</title></head><body><h1>Oakwood Community Scheduling (Origin :4103)</h1></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oakwood Community Scheduling — Clinic, Tutoring & Equipment</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-group">
+      <div class="brand-logo" aria-hidden="true">📅</div>
+      <div>
+        <h1>Oakwood Community Scheduling</h1>
+        <p class="brand-meta">40 Pine Street &amp; Health Commons • Clinic Visits, 1-on-1 Tutoring &amp; Maker Equipment</p>
+      </div>
+    </div>
+    <a class="hub-link" href="http://localhost:4100">← Neighborhood Hub</a>
+  </header>
+
+  <main class="layout">
+    <section>
+      <div id="bookings-container" aria-live="polite"></div>
+
+      <div class="section-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+          <h2 style="margin:0;font-size:18px;">Open Neighborhood Time Slots</h2>
+          <div class="filter-pills" id="filter-pills" style="margin:0;">
+            <button type="button" class="pill active" data-cat="all">All</button>
+            <button type="button" class="pill" data-cat="Clinic">Clinic</button>
+            <button type="button" class="pill" data-cat="Tutoring">Tutoring</button>
+            <button type="button" class="pill" data-cat="Equipment">Equipment</button>
+          </div>
+        </div>
+        <div class="provider-list" id="provider-list"></div>
+      </div>
+
+      <div class="section-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <h2 style="margin:0;font-size:17px;">Confirm Held Reservation</h2>
+          <span class="version-pill" id="state-version">state v1</span>
+        </div>
+
+        <div id="held-panel"></div>
+
+        <form class="form-grid" id="booking-form" style="display:none;">
+          <input type="text" id="attendee-name" placeholder="Attendee full name" required minlength="2">
+          <input type="text" id="attendee-contact" placeholder="Email or SMS reminder contact (optional)">
+          <input type="text" id="visit-reason" placeholder="Topic, project, or visit note (optional)">
+          <div id="form-error" style="color:#b91c1c;font-size:12px;"></div>
+          <button type="submit" class="btn-primary">Confirm Reservation</button>
+        </form>
+      </div>
+    </section>
+
+    <aside class="assistant-column">
+      <div class="assistant-shell">
+        <div class="assistant-banner">
+          <span><strong>BYOK Booking Assistant</strong> • Zero host inference</span>
+          <span id="audit-status" style="color:var(--muted);">Slot confirmation required</span>
+        </div>
+        <div id="assistant-root"></div>
+      </div>
+    </aside>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

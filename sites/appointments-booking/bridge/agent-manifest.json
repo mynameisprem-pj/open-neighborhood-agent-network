@@ -1,0 +1,10 @@
+{
+  "networks": [
+    {
+      "name": "oakwood_booking_assistant"
+    }
+  ],
+  "actions": {
+    "version": 1
+  }
+}
