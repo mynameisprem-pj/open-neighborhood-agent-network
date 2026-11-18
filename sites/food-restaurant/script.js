@@ -84,7 +84,7 @@ const RESTAURANT_INFO = {
     'Retroactive card refunds (call the kitchen directly for order issues)',
     'Alcohol sales'
   ],
-  hubUrl: 'http://localhost:4100'
+  hubUrl: 'http://127.0.0.1:4100'
 };
 
 class HearthCrumbPage {

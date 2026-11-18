@@ -90,7 +90,7 @@ const CENTER_INFO = {
     'Insurance claim pre-authorization adjudications',
     'Multi-week commercial heavy-machinery leases'
   ],
-  hubUrl: 'http://localhost:4100'
+  hubUrl: 'http://127.0.0.1:4100'
 };
 
 class OakwoodBookingPage {

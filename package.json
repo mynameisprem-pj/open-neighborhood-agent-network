@@ -10,6 +10,9 @@
   "scripts": {
     "setup:official": "node scripts/sync-official-runtime.mjs",
     "build:networks": "node scripts/build-networks.mjs",
+    "build:dist": "npm run build:networks && node scripts/export-static.mjs",
+    "origins:local": "node scripts/configure-origins.mjs --preset local",
+    "origins:set": "node scripts/configure-origins.mjs",
     "validate:specs": "node scripts/validate-manifests.mjs",
     "test": "node --test tests/*.test.mjs",
     "dev": "node scripts/dev-servers.mjs"

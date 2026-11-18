@@ -71,7 +71,7 @@ const PROVIDER_INFO = {
     'Hazardous waste or mold remediation',
     'Out-of-city long-haul moving trucks'
   ],
-  hubUrl: 'http://localhost:4100'
+  hubUrl: 'http://127.0.0.1:4100'
 };
 
 class CivicFixPage {
