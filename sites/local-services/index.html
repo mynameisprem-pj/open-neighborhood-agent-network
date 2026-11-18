@@ -1,1 +1,61 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>CivicFix Local Services</title></head><body><h1>CivicFix Local Services (Origin :4102)</h1></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CivicFix — Local Plumbing, Cleaning, Repairs & Errands</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-group">
+      <div class="brand-logo" aria-hidden="true">🛠️</div>
+      <div>
+        <h1>CivicFix Local Services &amp; Errands</h1>
+        <p class="brand-meta">88 Cedar Avenue • Mon–Sat 7:30 AM – 8:00 PM • Upfront Cooperative Pricing</p>
+      </div>
+    </div>
+    <a class="hub-link" href="http://localhost:4100">← Neighborhood Hub</a>
+  </header>
+
+  <main class="layout">
+    <section>
+      <div id="dispatches-container" aria-live="polite"></div>
+
+      <div class="section-card">
+        <h2 style="margin:0 0 14px;font-size:18px;">Neighborhood Trades &amp; Errand Runners</h2>
+        <div class="service-grid" id="service-grid"></div>
+      </div>
+
+      <div class="section-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <h2 style="margin:0;font-size:17px;">Live Service Estimate &amp; Dispatch</h2>
+          <span class="version-pill" id="state-version">state v1</span>
+        </div>
+
+        <div id="draft-panel"></div>
+
+        <form class="form-grid" id="dispatch-form" style="display:none;">
+          <input type="text" id="cust-name" placeholder="Your full name" required minlength="2">
+          <input type="text" id="cust-address" placeholder="Street address in Oakwood" required minlength="5">
+          <input type="text" id="cust-phone" placeholder="Callback phone (optional)">
+          <div id="form-error" style="color:#b91c1c;font-size:12px;"></div>
+          <button type="submit" class="btn-primary">Confirm &amp; Dispatch Technician</button>
+        </form>
+      </div>
+    </section>
+
+    <aside class="assistant-column">
+      <div class="assistant-shell">
+        <div class="assistant-banner">
+          <span><strong>BYOK Dispatch Assistant</strong> • Zero host inference</span>
+          <span id="audit-status" style="color:var(--muted);">Dispatch confirmation required</span>
+        </div>
+        <div id="assistant-root"></div>
+      </div>
+    </aside>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+:root {
+  --bg: #f4f7f7;
+  --surface: #ffffff;
+  --surface-alt: #eaf1f0;
+  --border: #d5e2e0;
+  --text: #0f1f1d;
+  --muted: #516764;
+  --accent: #0f766e;
+  --accent-hover: #115e59;
+  --accent-soft: #ccfbf1;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.brand-group { display: flex; align-items: center; gap: 12px; }
+.brand-logo {
+  width: 42px; height: 42px; border-radius: 12px;
+  background: var(--accent-soft); color: var(--accent);
+  display: grid; place-items: center; font-size: 21px;
+}
+.brand-group h1 { margin: 0; font-size: 19px; font-weight: 800; }
+.brand-meta { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
+
+.hub-link {
+  text-decoration: none; font-size: 13px; font-weight: 600;
+  color: var(--accent); background: var(--accent-soft);
+  padding: 8px 14px; border-radius: 999px;
+}
+
+.layout {
+  max-width: 1380px; margin: 0 auto; padding: 22px 24px 40px;
+  display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.95fr);
+  gap: 24px; align-items: start;
+}
+@media (max-width: 1024px) { .layout { grid-template-columns: 1fr; } }
+
+.section-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px; margin-bottom: 20px;
+}
+
+.service-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px;
+}
+
+.svc-card {
+  border: 1px solid var(--border); border-radius: 12px; padding: 15px;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 12px;
+}
+.svc-cat { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--accent); }
+.svc-card h3 { margin: 4px 0; font-size: 15px; }
+.svc-rate { font-size: 13px; font-weight: 700; color: var(--text); }
+.svc-desc { font-size: 13px; color: var(--muted); margin: 6px 0; }
+.win-chip {
+  display: inline-block; font-size: 11px; background: var(--surface-alt);
+  padding: 2px 7px; border-radius: 6px; margin: 2px 4px 2px 0; color: var(--muted);
+}
+
+.btn-select {
+  width: 100%; background: var(--text); color: #fff; border: none;
+  border-radius: 9px; padding: 9px 12px; font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.btn-select:hover { background: var(--accent); }
+
+.estimate-box {
+  background: var(--surface-alt); border-radius: 10px; padding: 14px; margin: 12px 0;
+  font-size: 13px;
+}
+
+.form-grid { display: grid; gap: 9px; margin-top: 12px; }
+.form-grid input, .form-grid select {
+  width: 100%; padding: 9px 11px; border: 1px solid var(--border);
+  border-radius: 8px; font-size: 13px; background: #fff;
+}
+
+.btn-primary {
+  background: var(--accent); color: #fff; border: none; border-radius: 9px;
+  padding: 10px 14px; font-size: 14px; font-weight: 700; cursor: pointer;
+}
+.btn-primary:hover { background: var(--accent-hover); }
+
+.dispatch-banner {
+  background: #dcfce7; border: 1px solid #86efac; color: #166534;
+  border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; font-size: 13px;
+}
+
+.version-pill {
+  font-size: 11px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: var(--surface-alt); padding: 3px 8px; border-radius: 6px; color: var(--muted);
+}
+
+.assistant-column { position: sticky; top: 18px; }
+.assistant-shell {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  display: flex; flex-direction: column; min-height: 640px; max-height: calc(100vh - 36px);
+}
+.assistant-banner {
+  padding: 12px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; font-size: 12px;
+}
+#assistant-root { flex: 1; min-height: 540px; display: flex; flex-direction: column; overflow: hidden; }

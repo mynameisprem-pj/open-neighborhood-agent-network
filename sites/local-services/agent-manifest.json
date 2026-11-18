@@ -1,0 +1,82 @@
+{
+  "brand": "CivicFix Local Services Assistant",
+  "networks": [
+    {
+      "name": "civicfix_assistant",
+      "front_man": "civicfix_front",
+      "hocon": "./civicfix_assistant.network.json",
+      "description": "Get transparent local estimates and book vetted Oakwood plumbers, electricians, eco-cleaners, handymen, and cargo-bike errand runners.",
+      "tags": [
+        "agentified-website",
+        "services",
+        "plumbing",
+        "cleaning",
+        "repairs",
+        "errands"
+      ],
+      "sample_queries": [
+        "How much would 2 hours of leak plumbing cost today vs tomorrow?",
+        "Prepare a standard 3-hour eco home cleaning estimate for tomorrow morning.",
+        "Confirm and dispatch my current estimate for Jordan at 412 Elm Street.",
+        "Can you excavate a municipal gas main or apply for a roof replacement permit?"
+      ]
+    }
+  ],
+  "llm_router": {
+    "base_url": "https://api.otari.ai/api/v1",
+    "mock": false,
+    "byok_router": "https://api.otari.ai/api/v1"
+  },
+  "allowed_peers": [],
+  "peer_policy": {
+    "mode": "closed",
+    "deny_origins": [],
+    "note": "Local agents and page-local dispatch actions only."
+  },
+  "agent_mcp": {
+    "protocol": "open-neighborhood-agent-mcp/v1",
+    "network": "civicfix_assistant",
+    "front_man": "civicfix_front",
+    "available": false,
+    "reason": "This is a static bundle; a public MCP facade requires an application host."
+  },
+  "theme": {
+    "primary": "#0f766e"
+  },
+  "linking": {
+    "protocol": "open-neighborhood-link/v1",
+    "exports": [
+      {
+        "network": "civicfix_assistant",
+        "front_man": "civicfix_front",
+        "aliases": [
+          "civicfix_assistant",
+          "civicfix_front"
+        ],
+        "url": "civicfix_assistant"
+      }
+    ],
+    "imports": [],
+    "link_updates": {
+      "mode": "browser-local"
+    }
+  },
+  "deployment": {
+    "mode": "static",
+    "self_contained_runtime": true,
+    "browser_mock": false,
+    "direct_byok": true,
+    "direct_mcp_requires_cors": true,
+    "public_mcp_facade": false
+  },
+  "actions": {
+    "version": 1,
+    "module": "./site-actions.js",
+    "bridge": "./bridge/action-bridge.html",
+    "agentTools": [
+      "get_services_and_estimate",
+      "configure_service_estimate",
+      "confirm_dispatch_request"
+    ]
+  }
+}

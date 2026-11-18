@@ -1,0 +1,10 @@
+{
+  "networks": [
+    {
+      "name": "civicfix_assistant"
+    }
+  ],
+  "actions": {
+    "version": 1
+  }
+}
