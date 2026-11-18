@@ -1,1 +1,75 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Hearth & Crumb Kitchen</title></head><body><h1>Hearth & Crumb Kitchen (Origin :4101)</h1></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hearth & Crumb Kitchen — Wood-Fired Pizza, Bowls & Bakery</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-group">
+      <div class="brand-logo" aria-hidden="true">🍕</div>
+      <div>
+        <h1>Hearth &amp; Crumb Kitchen</h1>
+        <p class="brand-meta">214 Maple Street • Daily 8:00 AM – 9:30 PM • Free Pickup or $3.50 Local Delivery (Free $35+)</p>
+      </div>
+    </div>
+    <a class="hub-link" href="http://localhost:4100">← Neighborhood Hub</a>
+  </header>
+
+  <main class="layout">
+    <section>
+      <div id="receipt-container" aria-live="polite"></div>
+
+      <div class="section-card">
+        <div class="filter-bar">
+          <h2 style="margin:0;font-size:18px;">Seasonal Kitchen Menu</h2>
+          <div class="filter-pills" id="filter-pills" role="group" aria-label="Dietary Filters">
+            <button type="button" class="pill active" data-diet="all">All Dishes</button>
+            <button type="button" class="pill" data-diet="vegan">Vegan</button>
+            <button type="button" class="pill" data-diet="vegetarian">Vegetarian</button>
+            <button type="button" class="pill" data-diet="gluten-free">Gluten-Free</button>
+            <button type="button" class="pill" data-diet="nut-free">Nut-Free</button>
+          </div>
+        </div>
+        <div class="menu-grid" id="menu-grid"></div>
+      </div>
+
+      <div class="section-card">
+        <div class="cart-header">
+          <h2>Your Kitchen Cart</h2>
+          <span class="version-pill" id="cart-version">state v1</span>
+        </div>
+
+        <div class="fulfillment-toggle">
+          <button type="button" class="mode-btn active" id="mode-pickup">Counter Pickup (Free)</button>
+          <button type="button" class="mode-btn" id="mode-delivery">Neighborhood Delivery</button>
+        </div>
+
+        <div id="cart-items"></div>
+        <div class="totals-box" id="cart-totals"></div>
+
+        <form class="checkout-form" id="checkout-form">
+          <input type="text" id="customer-name" placeholder="Your name for the kitchen ticket" required minlength="2">
+          <input type="text" id="delivery-address" placeholder="Local delivery street address" style="display:none;">
+          <div id="form-error" style="color:#b91c1c;font-size:12px;"></div>
+          <button type="submit" class="btn-submit">Place Order Manually</button>
+        </form>
+      </div>
+    </section>
+
+    <aside class="assistant-column">
+      <div class="assistant-shell">
+        <div class="assistant-banner">
+          <span><strong> BYOK Kitchen Assistant</strong> • Zero host inference</span>
+          <span id="audit-status" style="color:var(--muted);">Irreversible actions protected</span>
+        </div>
+        <div id="assistant-root"></div>
+      </div>
+    </aside>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
