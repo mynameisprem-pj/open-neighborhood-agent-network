@@ -77,46 +77,47 @@ test('State Grounding: all 3 vertical sites enforce expectedVersion optimistic c
   assert.equal(staleBook.ok, false);
 });
 
-test('Cross-Origin Integration: live servers pass probeAgenticSite & official check_partner.mjs', async (t) => {
-  const proc = spawn(process.execPath, ['scripts/dev-servers.mjs'], {
-    cwd: ROOT_DIR,
-    stdio: ['ignore', 'pipe', 'pipe']
-  });
+test('Cross-Origin Integration: configured origins pass probeAgenticSite & official check_partner.mjs', async (t) => {
+  const fs = await import('node:fs/promises');
+  const indexRaw = JSON.parse(
+    await fs.readFile(path.join(ROOT_DIR, 'sites/hub/neighborhood-index.json'), 'utf8')
+  );
+  const hubScript = await fs.readFile(path.join(ROOT_DIR, 'sites/hub/script.js'), 'utf8');
+  const hubOrigin = hubScript.match(/url:\s*'([^']+)'/)?.[1] || 'http://127.0.0.1:4100';
+  const usesLocalServers = indexRaw.peers.some((p) =>
+    /^http:\/\/(localhost|127\.0\.0\.1)/.test(p.origin)
+  );
 
-  t.after(() => {
-    proc.kill();
-  });
-
-  // Wait for all 4 ports to listen
-  await new Promise((resolve, reject) => {
-    const timeout = setTimeout(() => reject(new Error('Dev servers timed out starting')), 6000);
-    let output = '';
-    proc.stdout.on('data', (chunk) => {
-      output += chunk.toString();
-      if (output.includes('4103')) {
-        clearTimeout(timeout);
-        resolve();
-      }
+  if (usesLocalServers) {
+    const proc = spawn(process.execPath, ['scripts/dev-servers.mjs'], {
+      cwd: ROOT_DIR,
+      stdio: ['ignore', 'pipe', 'pipe']
     });
-  });
+    t.after(() => proc.kill());
 
-  const peers = [
-    'http://localhost:4101/hearth_crumb_assistant',
-    'http://localhost:4102/civicfix_assistant',
-    'http://localhost:4103/oakwood_booking_assistant'
-  ];
+    await new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => reject(new Error('Dev servers timed out starting')), 6000);
+      let output = '';
+      proc.stdout.on('data', (chunk) => {
+        output += chunk.toString();
+        if (output.includes('4103')) {
+          clearTimeout(timeout);
+          resolve();
+        }
+      });
+    });
+  }
 
-  for (const peerUrl of peers) {
-    const origin = new URL(peerUrl).origin;
-    const probe = await probeAgenticSite(origin);
-    assert.equal(probe.valid, true, `Expected valid manifest at ${origin}`);
+  for (const peer of indexRaw.peers) {
+    const peerUrl = `${peer.origin}/${peer.networkName}`;
+    const probe = await probeAgenticSite(peer.origin);
+    assert.equal(probe.valid, true, `Expected valid manifest at ${peer.origin}`);
 
-    // Run Cognizant AI Lab's official cross-origin partner verifier!
     const out = execFileSync(
       process.execPath,
-      [CHECK_PARTNER, peerUrl, '--origin', 'http://127.0.0.1:4100'],
+      [CHECK_PARTNER, peerUrl, '--origin', hubOrigin],
       { encoding: 'utf8' }
     );
-    assert.match(out, /hearth_crumb_assistant|civicfix_assistant|oakwood_booking_assistant/);
+    assert.match(out, new RegExp(peer.networkName));
   }
 });

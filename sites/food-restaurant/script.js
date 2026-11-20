@@ -73,7 +73,7 @@ const MENU_ITEMS = [
 
 const RESTAURANT_INFO = {
   name: 'Hearth & Crumb Kitchen',
-  url: 'http://localhost:4101',
+  url: 'https://hearth-crumb-food.vercel.app',
   phone: '(555) 014-2280',
   address: '214 Maple Street, Oakwood Neighborhood',
   hours: 'Daily 8:00 AM – 9:30 PM',
@@ -84,7 +84,7 @@ const RESTAURANT_INFO = {
     'Retroactive card refunds (call the kitchen directly for order issues)',
     'Alcohol sales'
   ],
-  hubUrl: 'http://127.0.0.1:4100'
+  hubUrl: 'https://open-neighborhood-hub.vercel.app'
 };
 
 class HearthCrumbPage {

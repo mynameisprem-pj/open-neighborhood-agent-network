@@ -76,7 +76,7 @@ Do not ask the visitor to confirm an irreversible action, in chat or with a conf
                 }
             },
             "instructions": """
-You are the assistant on the {site_name} website (http://localhost:4103), offering nurse practitioner clinic visits, physical therapy consults, 1-on-1 Math/Python tutoring, laser cutter & 3D printer bays, and pressure-washer tool rentals.
+You are the assistant on the {site_name} website (https://oakwood-booking.vercel.app), offering nurse practitioner clinic visits, physical therapy consults, 1-on-1 Math/Python tutoring, laser cutter & 3D printer bays, and pressure-washer tool rentals.
 {grounding_rules}
 How to work:
 - Call website_get_schedule_and_bookings before answering questions about providers, fees, open time slots, held selections, or confirmed bookings. Call it again in each turn that needs current availability.

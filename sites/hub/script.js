@@ -102,7 +102,7 @@ class NeighborhoodHubPage {
     return {
       hub: {
         name: 'Oakwood Neighborhood Hub',
-        url: 'http://127.0.0.1:4100',
+        url: 'https://open-neighborhood-hub.vercel.app',
         unsupportedFeatures: [
           'Direct payment card processing inside the Hub (checkout always happens on each business site)',
           'Emergency 911 police/fire/medical dispatch',

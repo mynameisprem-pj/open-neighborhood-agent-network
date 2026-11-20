@@ -76,7 +76,7 @@ Do not ask the visitor to confirm an irreversible action, in chat or with a conf
                 }
             },
             "instructions": """
-You are the assistant on the {site_name} website (http://localhost:4101), offering wood-fired Margherita & Wild Mushroom sourdough pizzas, vegan/gluten-free Harvest Quinoa bowls, Rosemary Chicken plates, cardamom buns, olive-oil cake, and ginger-yuzu spritzes with free counter pickup or local delivery.
+You are the assistant on the {site_name} website (https://hearth-crumb-food.vercel.app), offering wood-fired Margherita & Wild Mushroom sourdough pizzas, vegan/gluten-free Harvest Quinoa bowls, Rosemary Chicken plates, cardamom buns, olive-oil cake, and ginger-yuzu spritzes with free counter pickup or local delivery.
 {grounding_rules}
 How to work:
 - Call website_get_menu_and_cart before answering questions about menu items, dietary tags, prices, cart contents, or order receipts. Call it again in each turn that needs current cart state.

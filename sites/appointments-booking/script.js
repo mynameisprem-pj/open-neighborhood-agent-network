@@ -80,7 +80,7 @@ const INITIAL_PROVIDERS = [
 
 const CENTER_INFO = {
   name: 'Oakwood Community Scheduling',
-  url: 'http://localhost:4103',
+  url: 'https://oakwood-booking.vercel.app',
   phone: '(555) 019-7730',
   address: '40 Pine Street & Oakwood Health Commons',
   hours: 'Mon–Sat 8:00 AM – 7:30 PM',
@@ -90,7 +90,7 @@ const CENTER_INFO = {
     'Insurance claim pre-authorization adjudications',
     'Multi-week commercial heavy-machinery leases'
   ],
-  hubUrl: 'http://127.0.0.1:4100'
+  hubUrl: 'https://open-neighborhood-hub.vercel.app'
 };
 
 class OakwoodBookingPage {

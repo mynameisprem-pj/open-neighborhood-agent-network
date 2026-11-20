@@ -27,9 +27,9 @@
     "byok_router": "https://api.otari.ai/api/v1"
   },
   "allowed_peers": [
-    "http://localhost:4101",
-    "http://localhost:4102",
-    "http://localhost:4103"
+    "https://hearth-crumb-food.vercel.app",
+    "https://civicfix-services.vercel.app",
+    "https://oakwood-booking.vercel.app"
   ],
   "peer_policy": {
     "mode": "closed",

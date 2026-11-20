@@ -52,7 +52,7 @@ class SiteActions {
           },
           targetSiteUrl: {
             type: 'string',
-            enum: ['http://localhost:4101', 'http://localhost:4102', 'http://localhost:4103'],
+            enum: ['https://hearth-crumb-food.vercel.app', 'https://civicfix-services.vercel.app', 'https://oakwood-booking.vercel.app'],
             description: 'Exact partner siteUrl from website_get_hub_directory_and_plan.'
           },
           summary: {

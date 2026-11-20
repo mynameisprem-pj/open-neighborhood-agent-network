@@ -60,7 +60,7 @@ const SERVICE_CATALOG = [
 
 const PROVIDER_INFO = {
   name: 'CivicFix Local Services & Errands',
-  url: 'http://localhost:4102',
+  url: 'https://civicfix-services.vercel.app',
   phone: '(555) 018-4490',
   office: '88 Cedar Avenue, Oakwood Cooperative',
   hours: 'Mon–Sat 7:30 AM – 8:00 PM',
@@ -71,7 +71,7 @@ const PROVIDER_INFO = {
     'Hazardous waste or mold remediation',
     'Out-of-city long-haul moving trucks'
   ],
-  hubUrl: 'http://127.0.0.1:4100'
+  hubUrl: 'https://open-neighborhood-hub.vercel.app'
 };
 
 class CivicFixPage {

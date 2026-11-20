@@ -135,9 +135,9 @@ runtimeCtx = await bootNeighborhoodSite({
   privateContextProvider: () => App.page.getSnapshot().rawResidentProfile,
   allowedPeerContextKeys: App.page.getSnapshot().allowedPeerContextKeys,
   peerTitlesByOrigin: {
-    'http://localhost:4101': 'Hearth & Crumb Kitchen',
-    'http://localhost:4102': 'CivicFix Local Services',
-    'http://localhost:4103': 'Oakwood Community Scheduling'
+    'https://hearth-crumb-food.vercel.app': 'Hearth & Crumb Kitchen',
+    'https://civicfix-services.vercel.app': 'CivicFix Local Services',
+    'https://oakwood-booking.vercel.app': 'Oakwood Community Scheduling'
   },
   onAuditEvent: (events) => {
     auditListEl.innerHTML = events

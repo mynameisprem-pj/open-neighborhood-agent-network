@@ -16,15 +16,12 @@ Today, local restaurants, repair cooperatives, and community clinics are forced 
 
 ## Live Multi-Site Architecture (4 Independent Web Origins)
 
-| Website | Local Origin | Published Network | Real Page State & Actions |
+| Website | Live Production Origin | Published Network | Real Page State & Actions |
 |---|---|---|---|
-| **Oakwood Neighborhood Hub** (`sites/hub`) | `http://127.0.0.1:4100` | `neighborhood_hub` | Live manifest discovery, Privacy Shield (`sly_data`), cross-site partner orchestration, 1-click handoff Action Plan |
-| **Hearth & Crumb Kitchen** (`sites/food-restaurant`) | `http://localhost:4101` | `hearth_crumb_assistant` | Dietary filters, live kitchen cart, pickup/delivery fee engine, confirmed checkout (`HC-XXXXXX`) |
-| **CivicFix Local Services** (`sites/local-services`) | `http://localhost:4102` | `civicfix_assistant` | Plumbing, electrical, cleaning, handyman & errand rate quotes, urgent dispatch toggle, confirmed work orders (`CF-XXXXXX`) |
-| **Oakwood Community Scheduling** (`sites/appointments-booking`) | `http://localhost:4103` | `oakwood_booking_assistant` | Clinic, 1-on-1 STEM tutoring & maker-lab time-slot holds, slot locking (`OK-XXXXXX`), and cancellations |
-
-> **Why `127.0.0.1:4100` vs `localhost:4101–4103`?**
-> Browsers scope cookies by hostname rather than port. Opening the Hub on `127.0.0.1` while calling partner networks on `localhost` enforces **true cross-hostname isolation** on one machine—preventing cookie bleed, exercising real CORS headers, and triggering the pre-contact Peer Consent Card before any partner fetch occurs.
+| **Oakwood Neighborhood Hub** (`sites/hub`) | [`https://open-neighborhood-hub.vercel.app`](https://open-neighborhood-hub.vercel.app) | `neighborhood_hub` | Live manifest discovery, Privacy Shield (`sly_data`), cross-site partner orchestration, 1-click handoff Action Plan |
+| **Hearth & Crumb Kitchen** (`sites/food-restaurant`) | [`https://hearth-crumb-food.vercel.app`](https://hearth-crumb-food.vercel.app) | `hearth_crumb_assistant` | Dietary filters, live kitchen cart, pickup/delivery fee engine, confirmed checkout (`HC-XXXXXX`) |
+| **CivicFix Local Services** (`sites/local-services`) | [`https://civicfix-services.vercel.app`](https://civicfix-services.vercel.app) | `civicfix_assistant` | Plumbing, electrical, cleaning, handyman & errand rate quotes, urgent dispatch toggle, confirmed work orders (`CF-XXXXXX`) |
+| **Oakwood Community Scheduling** (`sites/appointments-booking`) | [`https://oakwood-booking.vercel.app`](https://oakwood-booking.vercel.app) | `oakwood_booking_assistant` | Clinic, 1-on-1 STEM tutoring & maker-lab time-slot holds, slot locking (`OK-XXXXXX`), and cancellations |
 
 ---
 
@@ -60,3 +57,6 @@ npm test
 
 # 5. Launch all 4 independent web origins with CORS enabled
 npm run dev
+
+#6. Anyone wanting to run offline on localhost
+npm run origins:local

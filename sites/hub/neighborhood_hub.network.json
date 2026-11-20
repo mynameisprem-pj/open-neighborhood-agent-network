@@ -16,9 +16,9 @@
     "version": 1
   },
   "link_labels": {
-    "http://localhost:4101/hearth_crumb_assistant": "Hearth & Crumb Kitchen",
-    "http://localhost:4102/civicfix_assistant": "CivicFix Local Services",
-    "http://localhost:4103/oakwood_booking_assistant": "Oakwood Community Scheduling"
+    "https://hearth-crumb-food.vercel.app/hearth_crumb_assistant": "Hearth & Crumb Kitchen",
+    "https://civicfix-services.vercel.app/civicfix_assistant": "CivicFix Local Services",
+    "https://oakwood-booking.vercel.app/oakwood_booking_assistant": "Oakwood Community Scheduling"
   },
   "commondefs": {
     "replacement_strings": {
@@ -49,9 +49,9 @@
       },
       "instructions": "\nYou are the assistant on the {site_name} website, helping neighbors discover local dining/bakery, home repairs/cleaning/errands, and clinic/tutoring/equipment scheduling across Oakwood.\n{grounding_rules}\nHow to work:\n- Call website_get_hub_directory_and_plan before answering questions about local businesses, links, shared preferences, or the visitor's saved plan. Call it again in each turn that needs current plan state.\n- To save a partner option or 1-click handoff link onto the visitor's plan, call website_add_plan_handoff only when the visitor asks, with exact targetSiteUrl from website_get_hub_directory_and_plan. To remove a saved item, call website_remove_plan_item only when the visitor asks.\n- For pizzas, bowls, bakery items, or meal orders, ask hearth_crumb_assistant what it offers and how to order.\n- For plumbing, electrical, cleaning, handyman repairs, or errands, ask civicfix_assistant what it offers and how to book.\n- For clinic visits, physical therapy, tutoring, or tool/maker rentals, ask oakwood_booking_assistant what it offers and how to book.\n{partner_rules}\n{cruse_rules}\n{peer_rules}\n",
       "tools": [
-        "http://localhost:4101/hearth_crumb_assistant",
-        "http://localhost:4102/civicfix_assistant",
-        "http://localhost:4103/oakwood_booking_assistant"
+        "https://hearth-crumb-food.vercel.app/hearth_crumb_assistant",
+        "https://civicfix-services.vercel.app/civicfix_assistant",
+        "https://oakwood-booking.vercel.app/oakwood_booking_assistant"
       ]
     }
   ]

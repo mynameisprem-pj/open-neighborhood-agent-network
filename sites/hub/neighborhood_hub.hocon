@@ -21,9 +21,9 @@
     },
 
     "link_labels": {
-        "http://localhost:4101/hearth_crumb_assistant": "Hearth & Crumb Kitchen",
-        "http://localhost:4102/civicfix_assistant": "CivicFix Local Services",
-        "http://localhost:4103/oakwood_booking_assistant": "Oakwood Community Scheduling"
+        "https://hearth-crumb-food.vercel.app/hearth_crumb_assistant": "Hearth & Crumb Kitchen",
+        "https://civicfix-services.vercel.app/civicfix_assistant": "CivicFix Local Services",
+        "https://oakwood-booking.vercel.app/oakwood_booking_assistant": "Oakwood Community Scheduling"
     },
 
     "commondefs": {
@@ -99,9 +99,9 @@ How to work:
 {peer_rules}
 """,
             "tools": [
-                "http://localhost:4101/hearth_crumb_assistant",
-                "http://localhost:4102/civicfix_assistant",
-                "http://localhost:4103/oakwood_booking_assistant"
+                "https://hearth-crumb-food.vercel.app/hearth_crumb_assistant",
+                "https://civicfix-services.vercel.app/civicfix_assistant",
+                "https://oakwood-booking.vercel.app/oakwood_booking_assistant"
             ]
         }
     ]
