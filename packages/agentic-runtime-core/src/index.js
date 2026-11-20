@@ -131,36 +131,15 @@ export function installResilientLlmFetch({ onRetry = null } = {}) {
     }
 
     const maxAttempts = 3;
-    const delaysMs = [1200, 2600];
+    const delaysMs = [900, 2000];
 
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-      let currentInit = init;
-
-      // On final retry against Google Gemini OpenAI endpoint after repeated 503s,
-      // fall back congested model to high-availability gemini-2.5-flash-lite
-      if (
-        attempt === maxAttempts &&
-        url.includes('generativelanguage.googleapis.com') &&
-        typeof init?.body === 'string'
-      ) {
-        try {
-          const parsed = JSON.parse(init.body);
-          if (parsed.model && parsed.model !== 'gemini-2.5-flash-lite') {
-            parsed.model = 'gemini-2.5-flash-lite';
-            currentInit = { ...init, body: JSON.stringify(parsed) };
-          }
-        } catch {
-          // Keep original body if not JSON
-        }
-      }
-
-      const res = await nativeFetch(input, currentInit);
+      const res = await nativeFetch(input, init);
       if (![502, 503, 529].includes(res.status) || attempt === maxAttempts) {
         return res;
       }
-
       onRetry?.({ attempt, status: res.status, url });
-      await new Promise((r) => setTimeout(r, delaysMs[attempt - 1] || 2000));
+      await new Promise((r) => setTimeout(r, delaysMs[attempt - 1] || 1500));
     }
   };
 }

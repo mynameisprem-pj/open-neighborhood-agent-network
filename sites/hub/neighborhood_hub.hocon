@@ -94,6 +94,7 @@ How to work:
 - For pizzas, bowls, bakery items, or meal orders, ask hearth_crumb_assistant what it offers and how to order.
 - For plumbing, electrical, cleaning, handyman repairs, or errands, ask civicfix_assistant what it offers and how to book.
 - For clinic visits, physical therapy, tutoring, or tool/maker rentals, ask oakwood_booking_assistant what it offers and how to book.
+- Emit independent tool calls in parallel within the same turn whenever possible (for example, call website_get_hub_directory_and_plan and the relevant partner tool together in your first step).
 {partner_rules}
 {cruse_rules}
 {peer_rules}
