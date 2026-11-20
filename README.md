@@ -55,8 +55,8 @@ npm run build:networks
 # 4. Run automated security, concurrency & live cross-origin check_partner.mjs test suite
 npm test
 
-# 5. Launch all 4 independent web origins with CORS enabled
-npm run dev
-
-#6. Anyone wanting to run offline on localhost
+# 5. Anyone wanting to run offline on localhost
 npm run origins:local
+
+# 6. Launch all 4 independent web origins with CORS enabled
+npm run dev
